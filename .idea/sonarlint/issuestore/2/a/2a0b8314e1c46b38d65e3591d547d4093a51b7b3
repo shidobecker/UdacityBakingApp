@@ -1,0 +1,5 @@
+
+Esquid:S1068"'Remove this unused "TAG" private field.(§√°ç8·èÌ≤∆-
+vsquid:S1450"XRemove the "viewModel" field and declare it as a local variable in the relevant methods.(ªí∫ß8·èÌ≤∆-
+lsquid:MaximumInheritanceDepth"<This class has 6 parents which is greater than 5 authorized.(˚∑åÍ8·èÌ≤∆-
+msquid:S00116"NRename this field "TAG" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(§√°ç8·èÌ≤∆-
