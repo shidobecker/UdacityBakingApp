@@ -1,7 +1,9 @@
 package com.bakingapp.android.udacitybakingapp.ui;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -10,6 +12,7 @@ import com.bakingapp.android.udacitybakingapp.R;
 import com.bakingapp.android.udacitybakingapp.model.Recipe;
 import com.bakingapp.android.udacitybakingapp.testutils.RecipeIdlingResource;
 import com.bakingapp.android.udacitybakingapp.viewmodel.RecipeListViewModel;
+import com.google.gson.Gson;
 
 import java.util.List;
 
@@ -43,6 +46,8 @@ public class RecipeListActivity extends AppCompatActivity {
 
     private RecipeListAdapter adapter;
 
+    public static final String RECIPE_EXTRA = "RECIPE_EXTRA";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -58,7 +63,10 @@ public class RecipeListActivity extends AppCompatActivity {
 
 
     private void observeRecipes() {
-        adapter = new RecipeListAdapter();
+        adapter = new RecipeListAdapter(recipe -> {
+            String recipeJson = new Gson().toJson(recipe);
+            startDetailActivity(recipeJson);
+        });
 
         boolean tabletSize = getResources().getBoolean(R.bool.isTablet);
 
@@ -66,8 +74,8 @@ public class RecipeListActivity extends AppCompatActivity {
             recipesRecyclerView.setLayoutManager(new GridLayoutManager(this, calculateNoOfColumns()));
         } else {
             recipesRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-
         }
+
         recipesRecyclerView.setAdapter(adapter);
 
         viewModel.getObservableRecipes().observe(this, (recipes -> {
@@ -79,6 +87,12 @@ public class RecipeListActivity extends AppCompatActivity {
         }));
 
 
+    }
+
+    private void startDetailActivity(String recipeJson){
+        Intent intent = new Intent(this, RecipeDetailsActivity.class);
+        intent.putExtra(RECIPE_EXTRA, recipeJson);
+        startActivity(intent);
     }
 
     private void showRecipeList(List<Recipe> recipes) {

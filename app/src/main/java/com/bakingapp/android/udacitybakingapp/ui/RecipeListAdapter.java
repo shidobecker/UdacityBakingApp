@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import androidx.annotation.NonNull;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -21,6 +22,16 @@ import butterknife.ButterKnife;
 public class RecipeListAdapter extends RecyclerView.Adapter<RecipeListAdapter.RecipeListViewHolder> {
 
     private List<Recipe> recipes = new ArrayList<>();
+
+    public RecipeListAdapter(RecipeClickListener listener) {
+        this.listener = listener;
+    }
+
+    interface RecipeClickListener{
+        void onClickRecipe(Recipe recipe);
+    }
+
+    private RecipeClickListener listener;
 
     void setRecipes(List<Recipe> recipes) {
         this.recipes = recipes;
@@ -58,9 +69,13 @@ public class RecipeListAdapter extends RecyclerView.Adapter<RecipeListAdapter.Re
         @BindView(R.id.recipe_item_serving)
         TextView serving;
 
+        @BindView(R.id.recipe_item_container)
+        ConstraintLayout container;
+
         RecipeListViewHolder(@NonNull View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
+
         }
 
         void bind(Recipe recipe) {
@@ -72,6 +87,10 @@ public class RecipeListAdapter extends RecyclerView.Adapter<RecipeListAdapter.Re
 
             String servingText = itemView.getContext().getString(R.string.serving) + String.valueOf(recipe.getServing());
             serving.setText(servingText);
+
+            container.setOnClickListener(view ->{
+                listener.onClickRecipe(recipe);
+            });
         }
 
         private void setImage(String url) {
