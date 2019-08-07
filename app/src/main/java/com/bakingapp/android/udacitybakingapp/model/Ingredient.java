@@ -1,12 +1,31 @@
 package com.bakingapp.android.udacitybakingapp.model;
 
+
 public class Ingredient {
+
+    private int entityId;
 
     private float quantity;
 
     private String measure;
 
     private String ingredient;
+
+
+    public Ingredient(int entityId, float quantity, String measure, String ingredient) {
+        this.entityId = entityId;
+        this.quantity = quantity;
+        this.measure = measure;
+        this.ingredient = ingredient;
+    }
+
+    public int getEntityId() {
+        return entityId;
+    }
+
+    public void setEntityId(int entityId) {
+        this.entityId = entityId;
+    }
 
     public float getQuantity() {
         return quantity;

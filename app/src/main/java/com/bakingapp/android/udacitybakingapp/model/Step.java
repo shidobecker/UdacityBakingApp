@@ -12,6 +12,15 @@ public class Step {
 
     private String thumbnailURL;
 
+    public Step(int entityId, int id, String shortDescription, String description, String videoURL, String thumbnailURL) {
+        this.id = id;
+        this.shortDescription = shortDescription;
+        this.description = description;
+        this.videoURL = videoURL;
+        this.thumbnailURL = thumbnailURL;
+    }
+
+
     public int getId() {
         return id;
     }

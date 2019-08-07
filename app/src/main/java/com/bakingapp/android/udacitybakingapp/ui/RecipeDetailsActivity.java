@@ -7,6 +7,8 @@ import com.bakingapp.android.udacitybakingapp.R;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import butterknife.ButterKnife;
+
 public class RecipeDetailsActivity extends AppCompatActivity {
 
 
@@ -14,5 +16,10 @@ public class RecipeDetailsActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_recipe_details);
+
+        ButterKnife.bind(this);
     }
+
+
+
 }
