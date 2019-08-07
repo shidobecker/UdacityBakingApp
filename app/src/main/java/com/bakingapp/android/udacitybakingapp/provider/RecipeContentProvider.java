@@ -20,7 +20,7 @@ public class RecipeContentProvider extends ContentProvider {
         // Initialize a UriMatcher
         UriMatcher uriMatcher = new UriMatcher(UriMatcher.NO_MATCH);
         // Add URI matches
-        uriMatcher.addURI(RecipeStepContract.AUTHORITY, RecipeStepContract.PATH_RECIPE_STEP, RECIPE_STEPS);
+        uriMatcher.addURI(RecipeContract.AUTHORITY, RecipeContract.PATH_RECIPE_INGREDIENT, RECIPE_STEPS);
         return uriMatcher;
     }
 

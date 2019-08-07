@@ -9,14 +9,14 @@ public class Ingredient {
 
     private String measure;
 
-    private String ingredient;
+    private String name;
 
 
-    public Ingredient(int entityId, float quantity, String measure, String ingredient) {
+    public Ingredient(int entityId, float quantity, String measure, String name) {
         this.entityId = entityId;
         this.quantity = quantity;
         this.measure = measure;
-        this.ingredient = ingredient;
+        this.name = name;
     }
 
     public int getEntityId() {
@@ -43,11 +43,11 @@ public class Ingredient {
         this.measure = measure;
     }
 
-    public String getIngredient() {
-        return ingredient;
+    public String getName() {
+        return name;
     }
 
-    public void setIngredient(String ingredient) {
-        this.ingredient = ingredient;
+    public void setName(String name) {
+        this.name = name;
     }
 }
