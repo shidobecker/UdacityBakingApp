@@ -7,6 +7,7 @@ import com.bakingapp.android.udacitybakingapp.R;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+//This will only be shown on mobile devices - Video Screen
 public class RecipeStepActivity extends AppCompatActivity {
 
     @Override

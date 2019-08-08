@@ -1,5 +1,5 @@
 
-Esquid:S1068"'Remove this unused "TAG" private field.(¤Γ΅8αν²Ζ-
-vsquid:S1450"XRemove the "viewModel" field and declare it as a local variable in the relevant methods.(»’Ί§8αν²Ζ-
-lsquid:MaximumInheritanceDepth"<This class has 6 parents which is greater than 5 authorized.(ϋ·κ8αν²Ζ-
-msquid:S00116"NRename this field "TAG" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(¤Γ΅8αν²Ζ-
+[squid:UselessImportCheck"-Remove this unused import 'android.util.Log'.(Τ¦Ψ²ψÿÿÿÿ8 §•ΣΖ-
+jsquid:MaximumInheritanceDepth"<This class has 6 parents which is greater than 5 authorized.(ϋ·κ8ογοÒΖ-
+ksquid:S00116"NRename this field "TAG" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(¤Γ΅8ογοÒΖ-
+Csquid:S1068"'Remove this unused "TAG" private field.(¤Γ΅8 §•ΣΖ-
