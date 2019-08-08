@@ -1,5 +1,6 @@
 package com.bakingapp.android.udacitybakingapp.ui;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.FrameLayout;
@@ -23,6 +24,12 @@ public class StepListActivity extends AppCompatActivity implements StepListFragm
     @BindView(R.id.step_list_fragment_container)
     FrameLayout stepListContainer;
 
+    static final String RECIPE_NAME_EXTRA = "RECIPE_NAME_EXTRA";
+
+    static final String STEP_EXTRA = "STEP_EXTRA";
+
+    Recipe recipe;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -33,14 +40,14 @@ public class StepListActivity extends AppCompatActivity implements StepListFragm
         if (getIntent().hasExtra(RecipeListActivity.RECIPE_EXTRA)) {
             //Recipe returned from JSON
             String recipeString = getIntent().getStringExtra(RecipeListActivity.RECIPE_EXTRA);
-            Recipe recipe = new Gson().fromJson(recipeString, Recipe.class);
-            setupView(recipe);
+            recipe = new Gson().fromJson(recipeString, Recipe.class);
+            setupView();
         } else {
             finish();
         }
     }
 
-    private void setupView(Recipe recipe){
+    private void setupView(){
         getSupportActionBar().setTitle(recipe.getName());
 
         StepListFragment fragment = StepListFragment.newInstance(recipe);
@@ -66,17 +73,21 @@ public class StepListActivity extends AppCompatActivity implements StepListFragm
         //TODO: START ACTIVITY AND CHECK FOR FRAGMENT);
 
         if(isTabletSize){
-            handleStepChangeForTablet();
+            handleStepChangeForTablet(step);
         }else{
-            handleStepChangeForMobile();
+            handleStepChangeForMobile(step);
         }
     }
 
-    private void handleStepChangeForMobile() {
-        Log.e(TAG,"Handle For mobile");
+    private void handleStepChangeForMobile(Step step) {
+        Intent intent = new Intent(this, StepActivity.class);
+        intent.putExtra(RECIPE_NAME_EXTRA, recipe.getName());
+        intent.putExtra(STEP_EXTRA, new Gson().toJson(step));
+
+        startActivity(intent);
     }
 
-    private void handleStepChangeForTablet() {
+    private void handleStepChangeForTablet(Step step) {
         Log.e(TAG,"Handle For tablet");
 
     }

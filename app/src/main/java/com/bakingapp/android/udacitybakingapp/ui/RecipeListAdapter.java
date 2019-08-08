@@ -23,7 +23,7 @@ public class RecipeListAdapter extends RecyclerView.Adapter<RecipeListAdapter.Re
 
     private List<Recipe> recipes = new ArrayList<>();
 
-    public RecipeListAdapter(RecipeClickListener listener) {
+    RecipeListAdapter(RecipeClickListener listener) {
         this.listener = listener;
     }
 
