@@ -8,7 +8,7 @@ public class Recipe {
 
     private String name;
 
-    private int serving;
+    private int servings;
 
     private String image;
 
@@ -33,12 +33,12 @@ public class Recipe {
         this.name = name;
     }
 
-    public int getServing() {
-        return serving;
+    public int getServings() {
+        return servings;
     }
 
-    public void setServing(int serving) {
-        this.serving = serving;
+    public void setServings(int servings) {
+        this.servings = servings;
     }
 
     public String getImage() {

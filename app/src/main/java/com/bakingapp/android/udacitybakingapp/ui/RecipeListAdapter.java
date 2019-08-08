@@ -85,7 +85,7 @@ public class RecipeListAdapter extends RecyclerView.Adapter<RecipeListAdapter.Re
             String numberOfStepsText = itemView.getContext().getString(R.string.number_of_steps) + String.valueOf(recipe.getSteps().size());
             numberOfSteps.setText(numberOfStepsText);
 
-            String servingText = itemView.getContext().getString(R.string.serving) + String.valueOf(recipe.getServing());
+            String servingText = itemView.getContext().getString(R.string.servings) + String.valueOf(recipe.getServings());
             serving.setText(servingText);
 
             container.setOnClickListener(view ->{

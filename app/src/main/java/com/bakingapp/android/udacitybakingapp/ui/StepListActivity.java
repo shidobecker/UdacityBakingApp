@@ -15,7 +15,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class StepListActivity extends AppCompatActivity implements StepListFragment.OnStepClickListener{
+public class StepListActivity extends AppCompatActivity implements StepListFragment.OnStepClickListener {
 
     private boolean isTabletSize;
 
@@ -47,7 +47,7 @@ public class StepListActivity extends AppCompatActivity implements StepListFragm
         }
     }
 
-    private void setupView(){
+    private void setupView() {
         getSupportActionBar().setTitle(recipe.getName());
 
         StepListFragment fragment = StepListFragment.newInstance(recipe);
@@ -58,23 +58,32 @@ public class StepListActivity extends AppCompatActivity implements StepListFragm
 
         isTabletSize = getResources().getBoolean(R.bool.isTablet);
 
-        if(isTabletSize){
+        if (isTabletSize) {
             populateFragments();
         }
 
     }
 
-    private void populateFragments(){
+    private void populateFragments() {
+        Step firstStep = recipe.getSteps().get(0);
+        InstructionsFragment instructionsFragment = InstructionsFragment
+                .newInstance(firstStep.getShortDescription(),
+                        firstStep.getDescription(),
+                        firstStep.getVideoURL(),
+                        firstStep.getThumbnailURL());
 
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.step_player_container, instructionsFragment)
+                .commit();
     }
 
     @Override
     public void onStepSelected(Step step) {
         //TODO: START ACTIVITY AND CHECK FOR FRAGMENT);
 
-        if(isTabletSize){
+        if (isTabletSize) {
             handleStepChangeForTablet(step);
-        }else{
+        } else {
             handleStepChangeForMobile(step);
         }
     }
@@ -88,7 +97,15 @@ public class StepListActivity extends AppCompatActivity implements StepListFragm
     }
 
     private void handleStepChangeForTablet(Step step) {
-        Log.e(TAG,"Handle For tablet");
+        InstructionsFragment instructionsFragment = InstructionsFragment
+                .newInstance(step.getShortDescription(),
+                        step.getDescription(),
+                        step.getVideoURL(),
+                        step.getThumbnailURL());
+
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.step_player_container, instructionsFragment)
+                .commit();
 
     }
 }

@@ -36,19 +36,6 @@ public class RecipeListViewModel extends ViewModel {
 
                     observableRecipes.postValue(response.body());
 
-                    for (Recipe r : response.body()) {
-                        Log.e(TAG, r.getName());
-                    }
-
-                    //Saving all recipes to be searched locally afterwards
-                /*    AppExecutors.getInstance().diskIO().execute(() -> {
-                        database.getRecipeDao().deleteAllRecipes();
-                        for (Recipe r : response.body()) {
-                            database.getRecipeDao().saveRecipe(r);
-                        }
-                    });
-*/
-
                 } else {
                     observableRecipes.postValue(null);
                     Log.e(TAG, "Error on response" + response.message());

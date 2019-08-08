@@ -19,7 +19,13 @@ public class Step {
         this.videoURL = videoURL;
         this.thumbnailURL = thumbnailURL;
     }
-    
+
+    public Step(String shortDescription, String description, String videoURL, String thumbnailURL) {
+        this.shortDescription = shortDescription;
+        this.description = description;
+        this.videoURL = videoURL;
+        this.thumbnailURL = thumbnailURL;
+    }
 
     public int getId() {
         return id;

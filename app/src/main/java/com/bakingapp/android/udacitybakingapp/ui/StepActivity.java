@@ -17,6 +17,7 @@ public class StepActivity extends AppCompatActivity {
 
     private Step step;
 
+    //TODO: Current Step to NAVIGATE
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,10 +40,14 @@ public class StepActivity extends AppCompatActivity {
     private void setupView() {
         getSupportActionBar().setTitle(recipeName);
 
-        PlayerFragment playerFragment = PlayerFragment.newInstance(step.getThumbnailURL(), step.getVideoURL());
+        InstructionsFragment instructionsFragment = InstructionsFragment
+                .newInstance(step.getShortDescription(),
+                        step.getDescription(),
+                        step.getVideoURL(),
+                        step.getThumbnailURL());
 
         getSupportFragmentManager().beginTransaction()
-                .replace(R.id.step_player_container, playerFragment)
+                .replace(R.id.step_player_container, instructionsFragment)
                 .commit();
 
     }
