@@ -1,6 +1,8 @@
 package com.bakingapp.android.udacitybakingapp.model;
 
 
+import com.google.gson.annotations.SerializedName;
+
 public class Ingredient {
 
     private int entityId;
@@ -9,6 +11,7 @@ public class Ingredient {
 
     private String measure;
 
+    @SerializedName("ingredient")
     private String name;
 
 
@@ -17,6 +20,9 @@ public class Ingredient {
         this.quantity = quantity;
         this.measure = measure;
         this.name = name;
+    }
+
+    public Ingredient() {
     }
 
     public int getEntityId() {

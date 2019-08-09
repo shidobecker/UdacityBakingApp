@@ -13,6 +13,7 @@ import java.util.List;
 
 import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -25,13 +26,15 @@ public class StepListAdapter extends RecyclerView.Adapter<StepListAdapter.StepLi
         void onClickStep(Step step);
     }
 
-    StepClickListener listener;
+    private StepClickListener listener;
 
-    public StepListAdapter(StepClickListener listener) {
+    private int currentItem = 0;
+
+    StepListAdapter(StepClickListener listener) {
         this.listener = listener;
     }
 
-    public void setStepList(List<Step> stepList) {
+    void setStepList(List<Step> stepList) {
         this.stepList = stepList;
         notifyDataSetChanged();
     }
@@ -45,7 +48,7 @@ public class StepListAdapter extends RecyclerView.Adapter<StepListAdapter.StepLi
 
     @Override
     public void onBindViewHolder(@NonNull StepListViewHolder holder, int position) {
-        holder.bind(stepList.get(position));
+        holder.bind(stepList.get(position), position);
     }
 
     @Override
@@ -54,9 +57,6 @@ public class StepListAdapter extends RecyclerView.Adapter<StepListAdapter.StepLi
     }
 
     class StepListViewHolder extends RecyclerView.ViewHolder {
-
-        @BindView(R.id.step_item_description)
-        TextView description;
 
         @BindView(R.id.step_item_short_description)
         TextView shortDescription;
@@ -70,11 +70,21 @@ public class StepListAdapter extends RecyclerView.Adapter<StepListAdapter.StepLi
             ButterKnife.bind(this, itemView);
         }
 
-        void bind(Step step) {
-            shortDescription.setText(step.getShortDescription());
-            description.setText(step.getDescription());
+        void bind(Step step, int position) {
 
-            container.setOnClickListener(view -> listener.onClickStep(step));
+            if (position == currentItem) {
+                container.setBackgroundColor(ContextCompat.getColor(itemView.getContext(), R.color.colorStepListBGSelected));
+            } else {
+                container.setBackgroundColor(ContextCompat.getColor(itemView.getContext(), R.color.colorStepListBG));
+            }
+
+            shortDescription.setText(step.getShortDescription());
+
+            container.setOnClickListener(view -> {
+                listener.onClickStep(step);
+                currentItem = position;
+                notifyDataSetChanged();
+            });
         }
     }
 

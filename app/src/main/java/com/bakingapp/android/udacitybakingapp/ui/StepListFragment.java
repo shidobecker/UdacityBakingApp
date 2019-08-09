@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.bakingapp.android.udacitybakingapp.R;
+import com.bakingapp.android.udacitybakingapp.model.Ingredient;
 import com.bakingapp.android.udacitybakingapp.model.Recipe;
 import com.bakingapp.android.udacitybakingapp.model.Step;
 import com.google.gson.Gson;
@@ -29,11 +30,18 @@ public class StepListFragment extends Fragment {
     @BindView(R.id.step_recycler_view)
     RecyclerView stepRecyclerView;
 
-    private StepListAdapter adapter;
+    @BindView(R.id.step_ingredients_recycler_view)
+    RecyclerView ingredientsRecyclerView;
+
+    private StepListAdapter stepListAdapter;
+
+    private IngredientsAdapter ingredientsAdapter;
 
     OnStepClickListener stepCallback;
 
     private List<Step> stepList;
+
+    private List<Ingredient>ingredients;
 
     public interface OnStepClickListener {
         void onStepSelected(Step step);
@@ -63,6 +71,7 @@ public class StepListFragment extends Fragment {
             String arg = getArguments().getString(STEPS_ARG);
             Recipe recipe = new Gson().fromJson(arg, Recipe.class);
             stepList = recipe.getSteps();
+            ingredients = recipe.getIngredients();
         }
 
         return rootView;
@@ -74,19 +83,29 @@ public class StepListFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         setupStepList();
+        setupIngredientsList();
     }
 
 
     private void setupStepList() {
-        adapter = new StepListAdapter(step -> {
+        stepListAdapter = new StepListAdapter(step -> {
             stepCallback.onStepSelected(step);
         });
 
-        adapter.setStepList(stepList);
+        stepListAdapter.setStepList(stepList);
 
         stepRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
-        stepRecyclerView.setAdapter(adapter);
+        stepRecyclerView.setAdapter(stepListAdapter);
+    }
+
+    private void setupIngredientsList(){
+        ingredientsAdapter = new IngredientsAdapter();
+        ingredientsAdapter.setIngredients(ingredients);
+
+        ingredientsRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+
+        ingredientsRecyclerView.setAdapter(ingredientsAdapter);
     }
 
 
