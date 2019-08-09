@@ -2,12 +2,14 @@ package com.bakingapp.android.udacitybakingapp.ui;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.widget.FrameLayout;
 
 import com.bakingapp.android.udacitybakingapp.R;
 import com.bakingapp.android.udacitybakingapp.model.Recipe;
 import com.bakingapp.android.udacitybakingapp.model.Step;
+import com.bakingapp.android.udacitybakingapp.utils.RecipePreferences;
 import com.google.gson.Gson;
 
 import androidx.annotation.Nullable;
@@ -79,8 +81,6 @@ public class StepListActivity extends AppCompatActivity implements StepListFragm
 
     @Override
     public void onStepSelected(Step step) {
-        //TODO: START ACTIVITY AND CHECK FOR FRAGMENT);
-
         if (isTabletSize) {
             handleStepChangeForTablet(step);
         } else {
@@ -106,6 +106,35 @@ public class StepListActivity extends AppCompatActivity implements StepListFragm
         getSupportFragmentManager().beginTransaction()
                 .replace(R.id.step_player_container, instructionsFragment)
                 .commit();
+
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.step_list_menu, menu);
+
+        if (RecipePreferences.getCurrentDisplayRecipe(this) == recipe.getId()) {
+            menu.getItem(0).setIcon(R.drawable.ic_bookmark_black);
+        }
+
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        if (item.getItemId() == R.id.action_bookmark) {
+            //Saving that Id on SharedPreferences
+            if (RecipePreferences.getCurrentDisplayRecipe(this) != recipe.getId()) {
+                RecipePreferences.setCurrentDisplayRecipe(this, recipe.getId());
+                item.setIcon(R.drawable.ic_bookmark_black);
+            } else {
+                RecipePreferences.setCurrentDisplayRecipe(this, -1);
+                item.setIcon(R.drawable.ic_bookmark_white);
+            }
+        }
+
+        return super.onOptionsItemSelected(item);
 
     }
 }

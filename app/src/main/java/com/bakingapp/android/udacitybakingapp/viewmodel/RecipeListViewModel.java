@@ -27,7 +27,6 @@ public class RecipeListViewModel extends ViewModel {
     private void fetchRecipesFromApi() {
         RecipesApi api = RetrofitClient.getInstance().getRetrofit().create(RecipesApi.class);
         Call<List<Recipe>> call = api.getAllRecipes();
-        //Log.e(TAG, call.request().url().toString());
 
         call.enqueue(new Callback<List<Recipe>>() {
             @Override
