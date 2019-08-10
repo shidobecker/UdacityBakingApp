@@ -26,7 +26,7 @@ public class StepListActivity extends AppCompatActivity implements StepListFragm
     @BindView(R.id.step_list_fragment_container)
     FrameLayout stepListContainer;
 
-    static final String RECIPE_NAME_EXTRA = "RECIPE_NAME_EXTRA";
+    static final String RECIPE_EXTRA = "RECIPE_EXTRA";
 
     static final String STEP_EXTRA = "STEP_EXTRA";
 
@@ -90,7 +90,7 @@ public class StepListActivity extends AppCompatActivity implements StepListFragm
 
     private void handleStepChangeForMobile(Step step) {
         Intent intent = new Intent(this, StepActivity.class);
-        intent.putExtra(RECIPE_NAME_EXTRA, recipe.getName());
+        intent.putExtra(RECIPE_EXTRA, new Gson().toJson(recipe));
         intent.putExtra(STEP_EXTRA, new Gson().toJson(step));
 
         startActivity(intent);

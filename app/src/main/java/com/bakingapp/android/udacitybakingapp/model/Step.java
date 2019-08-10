@@ -1,5 +1,7 @@
 package com.bakingapp.android.udacitybakingapp.model;
 
+import java.util.Objects;
+
 public class Step {
 
     private int id;
@@ -65,5 +67,19 @@ public class Step {
 
     public void setThumbnailURL(String thumbnailURL) {
         this.thumbnailURL = thumbnailURL;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Step step = (Step) o;
+        return id == step.id;
+    }
+
+    @Override
+    public int hashCode() {
+
+        return Objects.hash(id);
     }
 }
