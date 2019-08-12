@@ -9,4 +9,12 @@
   <string name="ingredient_list">Ingredient List:</string>
   <string name="next_step"><![CDATA[Next Step >>]]></string>
   <string name="previous_step"><![CDATA[<< Previous Step]]></string>
+  <string name="no_recipe_widget">You have no recipe saved</string>
+
+  <string name="channel_id">com.udacitybaking.app.channelId.widget</string>
+  <string name="channel_name">Widget Service</string>
+  <string name="notification_service_title">Baking app Service</string>
+  <string name="notification_service_body">Updating your recipe</string>
+
+
 </resources>

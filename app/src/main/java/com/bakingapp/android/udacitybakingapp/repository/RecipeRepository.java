@@ -1,8 +1,6 @@
 package com.bakingapp.android.udacitybakingapp.repository;
 
-import com.bakingapp.android.udacitybakingapp.model.RecipeIngredients;
-
-import java.util.List;
+import com.bakingapp.android.udacitybakingapp.model.Recipe;
 
 import io.realm.Realm;
 
@@ -17,26 +15,36 @@ public class RecipeRepository {
     }
 
 
-    public void saveRecipes(List<RecipeIngredients> recipeList) {
-        removeRecipe();
-
+    public void saveRecipe(Recipe recipe) {
         Realm realm = Realm.getDefaultInstance();
+        realm.executeTransaction(realm1 -> realm1.delete(Recipe.class));
 
-        realm.executeTransaction(realm1 -> realm1.copyToRealm(recipeList));
+        realm.executeTransaction(realm1 -> realm1.copyToRealm(recipe));
+
+        realm.close();
 
     }
 
-    public List<RecipeIngredients> queryAllByRecipeId(int recipeId) {
+    //Since is called by service, no need to use App executors
+    public Recipe queryAllByRecipeId(int recipeId) {
         Realm realm = Realm.getDefaultInstance();
 
-        return realm.copyFromRealm(realm.where((RecipeIngredients.class))
-                .equalTo("recipeId", recipeId).findAll());
+        Recipe recipe = realm.where((Recipe.class)).equalTo("id", recipeId).findFirst();
+
+        if (recipe != null) {
+            return realm.copyFromRealm(recipe);
+        } else {
+            return null;
+        }
 
     }
 
     public void removeRecipe() {
         Realm realm = Realm.getDefaultInstance();
-        realm.executeTransaction(realm1 -> realm1.delete(RecipeIngredients.class));
+        realm.executeTransaction(realm1 -> realm1.delete(Recipe.class));
+
+        realm.close();
+
     }
 
 

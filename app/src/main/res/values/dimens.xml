@@ -2,6 +2,9 @@
 <resources>
 
   <dimen name="details_default_margin">8dp</dimen>
+  <dimen name="widgetMinHeight">150dp</dimen>
+  <dimen name="widgetMinWidth">150dp</dimen>
+  <dimen name="widgetMinResizeHeight">200dp</dimen>
 
 
 </resources>

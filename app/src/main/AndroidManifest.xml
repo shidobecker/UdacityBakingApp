@@ -3,6 +3,7 @@
   package="com.bakingapp.android.udacitybakingapp">
 
   <uses-permission android:name="android.permission.INTERNET" />
+  <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
 
   <application
     android:name=".RecipeApplication"
@@ -12,7 +13,8 @@
     android:roundIcon="@mipmap/ic_launcher_round"
     android:supportsRtl="true"
     android:theme="@style/AppTheme">
-    <activity android:name=".ui.RecipeListActivity">
+    <activity android:name=".ui.RecipeListActivity"
+      android:launchMode="singleTop">
       <intent-filter>
         <action android:name="android.intent.action.MAIN" />
         <category android:name="android.intent.category.LAUNCHER" />
@@ -20,10 +22,16 @@
       </intent-filter>
     </activity>
 
-    <provider
-      android:name=".provider.RecipeContentProvider"
-      android:authorities="com.bakingapp.android.udacitybakingapp"
-      android:exported="true" />
+    <receiver android:name=".widget.RecipeWidgetProvider">
+
+      <intent-filter>
+        <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+      </intent-filter>
+
+      <meta-data
+        android:name="android.appwidget.provider"
+        android:resource="@xml/recipe_widget_info" />
+    </receiver>
 
     <activity android:name=".ui.StepListActivity" />
 

@@ -2,9 +2,11 @@ package com.bakingapp.android.udacitybakingapp.model;
 
 import java.util.List;
 
+import io.realm.RealmList;
+import io.realm.RealmObject;
 
-//Todo: Change it all to Realm model to be able to enter from Widget
-public class Recipe {
+
+public class Recipe extends RealmObject {
 
     private int id;
 
@@ -14,10 +16,12 @@ public class Recipe {
 
     private String image;
 
-    private List<Ingredient> ingredients;
+    private RealmList<Ingredient> ingredients;
 
-    private List<Step> steps;
+    private RealmList<Step> steps;
 
+    public Recipe() {
+    }
 
     public int getId() {
         return id;
@@ -55,15 +59,15 @@ public class Recipe {
         return ingredients;
     }
 
-    public void setIngredients(List<Ingredient> ingredients) {
+    public void setIngredients(RealmList<Ingredient> ingredients) {
         this.ingredients = ingredients;
     }
 
-    public List<Step> getSteps() {
+    public RealmList<Step> getSteps() {
         return steps;
     }
 
-    public void setSteps(List<Step> steps) {
+    public void setSteps(RealmList<Step> steps) {
         this.steps = steps;
     }
 }

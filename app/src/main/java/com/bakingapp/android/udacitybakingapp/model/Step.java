@@ -2,7 +2,9 @@ package com.bakingapp.android.udacitybakingapp.model;
 
 import java.util.Objects;
 
-public class Step {
+import io.realm.RealmObject;
+
+public class Step extends RealmObject {
 
     private int id;
 
@@ -14,6 +16,8 @@ public class Step {
 
     private String thumbnailURL;
 
+    public Step() {
+    }
 
     public Step(String shortDescription, String description, String videoURL, String thumbnailURL) {
         this.shortDescription = shortDescription;

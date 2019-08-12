@@ -7,16 +7,13 @@ import android.view.MenuItem;
 import android.widget.FrameLayout;
 
 import com.bakingapp.android.udacitybakingapp.R;
-import com.bakingapp.android.udacitybakingapp.model.Ingredient;
 import com.bakingapp.android.udacitybakingapp.model.Recipe;
-import com.bakingapp.android.udacitybakingapp.model.RecipeIngredients;
 import com.bakingapp.android.udacitybakingapp.model.Step;
 import com.bakingapp.android.udacitybakingapp.repository.RecipeRepository;
 import com.bakingapp.android.udacitybakingapp.utils.RecipePreferences;
+import com.bakingapp.android.udacitybakingapp.widget.RecipeWidgetProvider;
+import com.bakingapp.android.udacitybakingapp.widget.RecipeWidgetService;
 import com.google.gson.Gson;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -46,17 +43,25 @@ public class StepListActivity extends AppCompatActivity implements StepListFragm
         ButterKnife.bind(this);
 
         if (getIntent().hasExtra(RecipeListActivity.RECIPE_EXTRA)) {
-            //Recipe returned from JSON
+            //Recipe returned from JSON from previous activity
             String recipeString = getIntent().getStringExtra(RecipeListActivity.RECIPE_EXTRA);
             recipe = new Gson().fromJson(recipeString, Recipe.class);
             setupView();
-        } else {
+        } else if(getIntent().hasExtra(RecipeWidgetProvider.WIDGET_RECIPE_EXTRA)){
+            //Recipe returned from JSON that came from widget
+            String recipeString = getIntent().getStringExtra(RecipeWidgetProvider.WIDGET_RECIPE_EXTRA);
+            recipe = new Gson().fromJson(recipeString, Recipe.class);
+            setupView();
+
+        }else{
             finish();
         }
     }
 
     private void setupView() {
         getSupportActionBar().setTitle(recipe.getName());
+
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         StepListFragment fragment = StepListFragment.newInstance(recipe);
 
@@ -140,6 +145,9 @@ public class StepListActivity extends AppCompatActivity implements StepListFragm
                 item.setIcon(R.drawable.ic_bookmark_white);
                 removeRecipe();
             }
+        }else if (item.getItemId() == android.R.id.home) {
+                onBackPressed();
+                return true;
         }
 
         return super.onOptionsItemSelected(item);
@@ -147,26 +155,15 @@ public class StepListActivity extends AppCompatActivity implements StepListFragm
     }
 
     private void saveRecipe() {
-        List<RecipeIngredients> recipeIngredients = new ArrayList<>();
-
-        for (Ingredient i : recipe.getIngredients()) {
-            RecipeIngredients ri = new RecipeIngredients(
-                    recipe.getId(),
-                    recipe.getName(),
-                    i.getName(),
-                    i.getQuantity(),
-                    i.getMeasure());
-
-            recipeIngredients.add(ri);
-        }
-
-        RecipeRepository.getInstance().saveRecipes(recipeIngredients);
-
+        RecipeRepository.getInstance().saveRecipe(recipe);
+        RecipeWidgetService.startActionOpenRecipe(this);
     }
 
     private void removeRecipe() {
         RecipeRepository.getInstance().removeRecipe();
+        RecipeWidgetService.startActionRemoveRecipe(this);
     }
+
 
 
 }

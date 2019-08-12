@@ -1,6 +1,7 @@
 package com.bakingapp.android.udacitybakingapp.ui;
 
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
@@ -64,6 +65,8 @@ public class StepActivity extends AppCompatActivity {
         viewModel.getObservableRecipe().observe(this, recipe ->
                 getSupportActionBar().setTitle(recipe.getName()));
 
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
         viewModel.getObservableCurrentStep().observe(this, step -> {
             InstructionsFragment instructionsFragment = InstructionsFragment
                     .newInstance(step.getShortDescription(),
@@ -96,5 +99,13 @@ public class StepActivity extends AppCompatActivity {
 
     }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == android.R.id.home) {
+            onBackPressed();
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
 
+    }
 }
