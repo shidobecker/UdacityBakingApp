@@ -29,6 +29,9 @@
 
     <activity android:name=".ui.StepActivity" />
 
+    <service android:name=".widget.RecipeWidgetService" />
+
+
   </application>
 
 </manifest>

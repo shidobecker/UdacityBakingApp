@@ -2,6 +2,8 @@ package com.bakingapp.android.udacitybakingapp.model;
 
 import java.util.List;
 
+
+//Todo: Change it all to Realm model to be able to enter from Widget
 public class Recipe {
 
     private int id;
