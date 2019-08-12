@@ -55,4 +55,22 @@ public class RecipeListViewModel extends ViewModel {
         fetchRecipesFromApi();
     }
 
+    private boolean hasAnyRecipeSaved(){
+        return true;
+    }
+
+
+    private void saveAllPlants(){
+
+      /*  //Saves all recipes on ContentProvider if there's any saved
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(RecipeContract.RecipeIngredientEntry.COLUMN_RECIPE_ID, plantType);
+        contentValues.put(RecipeContract.RecipeIngredientEntry.COLUMN_RECIPE_ID, timeNow);
+        contentValues.put(RecipeContract.RecipeIngredientEntry.COLUMN_RECIPE_ID, timeNow);
+        contentValues.put(RecipeContract.RecipeIngredientEntry.COLUMN_RECIPE_ID, timeNow);
+
+        getContentResolver().insert(PlantContract.PlantEntry.CONTENT_URI, contentValues);*/
+    }
+
+
 }

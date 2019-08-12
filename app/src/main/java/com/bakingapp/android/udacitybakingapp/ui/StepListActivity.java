@@ -7,10 +7,16 @@ import android.view.MenuItem;
 import android.widget.FrameLayout;
 
 import com.bakingapp.android.udacitybakingapp.R;
+import com.bakingapp.android.udacitybakingapp.model.Ingredient;
 import com.bakingapp.android.udacitybakingapp.model.Recipe;
+import com.bakingapp.android.udacitybakingapp.model.RecipeIngredients;
 import com.bakingapp.android.udacitybakingapp.model.Step;
+import com.bakingapp.android.udacitybakingapp.repository.RecipeRepository;
 import com.bakingapp.android.udacitybakingapp.utils.RecipePreferences;
 import com.google.gson.Gson;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -128,13 +134,39 @@ public class StepListActivity extends AppCompatActivity implements StepListFragm
             if (RecipePreferences.getCurrentDisplayRecipe(this) != recipe.getId()) {
                 RecipePreferences.setCurrentDisplayRecipe(this, recipe.getId());
                 item.setIcon(R.drawable.ic_bookmark_black);
+                saveRecipe();
             } else {
                 RecipePreferences.setCurrentDisplayRecipe(this, -1);
                 item.setIcon(R.drawable.ic_bookmark_white);
+                removeRecipe();
             }
         }
 
         return super.onOptionsItemSelected(item);
 
     }
+
+    private void saveRecipe() {
+        List<RecipeIngredients> recipeIngredients = new ArrayList<>();
+
+        for (Ingredient i : recipe.getIngredients()) {
+            RecipeIngredients ri = new RecipeIngredients(
+                    recipe.getId(),
+                    recipe.getName(),
+                    i.getName(),
+                    i.getQuantity(),
+                    i.getMeasure());
+
+            recipeIngredients.add(ri);
+        }
+
+        RecipeRepository.getInstance().saveRecipes(recipeIngredients);
+
+    }
+
+    private void removeRecipe() {
+        RecipeRepository.getInstance().removeRecipe();
+    }
+
+
 }
