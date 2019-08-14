@@ -33,27 +33,14 @@
 
     <TextView
       android:id="@+id/step_previous"
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      android:layout_gravity="start"
-      android:layout_weight="1"
-      android:padding="8dp"
       android:text="@string/previous_step"
-      android:textColor="@android:color/white"
-      android:textSize="16sp" />
+      style="@style/PreviousText" />
 
 
     <TextView
       android:id="@+id/step_next"
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      android:layout_gravity="end"
-      android:layout_weight="1"
-      android:gravity="end"
-      android:padding="8dp"
       android:text="@string/next_step"
-      android:textColor="@android:color/white"
-      android:textSize="16sp" />
+      style="@style/NextText" />
 
 
   </LinearLayout>

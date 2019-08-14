@@ -6,5 +6,6 @@
   <dimen name="widgetMinWidth">150dp</dimen>
   <dimen name="widgetMinResizeHeight">200dp</dimen>
 
-
+  <dimen name="default_margin">8dp</dimen>
+  <dimen name="big_text">20sp</dimen>
 </resources>

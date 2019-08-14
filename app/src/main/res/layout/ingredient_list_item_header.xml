@@ -9,27 +9,16 @@
 
   <TextView
     android:id="@+id/ingredient_list_name"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:layout_marginStart="8dp"
-    android:layout_marginTop="3dp"
-    android:textSize="16sp"
-    android:textStyle="bold"
-    android:paddingTop="10dp"
-    android:paddingBottom="10dp"
     app:layout_constraintStart_toEndOf="@+id/imageView"
     app:layout_constraintTop_toTopOf="parent"
-    android:text="@string/ingredient_list" />
+    android:text="@string/ingredient_list"
+    style="@style/IngredientHeaderName" />
 
   <ImageView
     android:id="@+id/imageView"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:layout_marginStart="16dp"
-    android:paddingTop="10dp"
-    android:paddingBottom="10dp"
     app:layout_constraintStart_toStartOf="parent"
     app:layout_constraintTop_toTopOf="parent"
-    app:srcCompat="@android:drawable/ic_input_get" />
+    app:srcCompat="@android:drawable/ic_input_get"
+    style="@style/IngredientHeaderImage" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
