@@ -15,12 +15,15 @@ import com.google.gson.Gson;
 
 import java.util.List;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.VisibleForTesting;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.test.espresso.IdlingResource;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -31,6 +34,20 @@ public class RecipeListActivity extends AppCompatActivity {
 
     @Nullable
     private RecipeIdlingResource mIdlingResource;
+
+    @Nullable
+    public RecipeIdlingResource getmIdlingResource() {
+        return mIdlingResource;
+    }
+
+    @VisibleForTesting
+    @NonNull
+    public IdlingResource getIdlingResource() {
+        if (mIdlingResource == null) {
+            mIdlingResource = new RecipeIdlingResource();
+        }
+        return mIdlingResource;
+    }
 
     private RecipeListViewModel viewModel;
 
@@ -53,11 +70,14 @@ public class RecipeListActivity extends AppCompatActivity {
         setContentView(R.layout.activity_recipe_list);
         ButterKnife.bind(this);
 
+        getIdlingResource();
+
         viewModel = ViewModelProviders.of(this).get(RecipeListViewModel.class);
 
         viewModel.getAllRecipes();
 
         observeRecipes();
+
     }
 
 

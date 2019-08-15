@@ -29,9 +29,9 @@ public class StepListActivity extends AppCompatActivity implements StepListFragm
     @BindView(R.id.step_list_fragment_container)
     FrameLayout stepListContainer;
 
-    static final String RECIPE_EXTRA = "RECIPE_EXTRA";
+    public static final String RECIPE_EXTRA = "RECIPE_EXTRA";
 
-    static final String STEP_EXTRA = "STEP_EXTRA";
+    public static final String STEP_EXTRA = "STEP_EXTRA";
 
     Recipe recipe;
 
@@ -47,13 +47,13 @@ public class StepListActivity extends AppCompatActivity implements StepListFragm
             String recipeString = getIntent().getStringExtra(RecipeListActivity.RECIPE_EXTRA);
             recipe = new Gson().fromJson(recipeString, Recipe.class);
             setupView();
-        } else if(getIntent().hasExtra(RecipeWidgetProvider.WIDGET_RECIPE_EXTRA)){
+        } else if (getIntent().hasExtra(RecipeWidgetProvider.WIDGET_RECIPE_EXTRA)) {
             //Recipe returned from JSON that came from widget
             String recipeString = getIntent().getStringExtra(RecipeWidgetProvider.WIDGET_RECIPE_EXTRA);
             recipe = new Gson().fromJson(recipeString, Recipe.class);
             setupView();
 
-        }else{
+        } else {
             finish();
         }
     }
@@ -145,9 +145,9 @@ public class StepListActivity extends AppCompatActivity implements StepListFragm
                 item.setIcon(R.drawable.ic_bookmark_white);
                 removeRecipe();
             }
-        }else if (item.getItemId() == android.R.id.home) {
-                onBackPressed();
-                return true;
+        } else if (item.getItemId() == android.R.id.home) {
+            onBackPressed();
+            return true;
         }
 
         return super.onOptionsItemSelected(item);
@@ -163,7 +163,6 @@ public class StepListActivity extends AppCompatActivity implements StepListFragm
         RecipeRepository.getInstance().removeRecipe();
         RecipeWidgetService.startActionRemoveRecipe(this);
     }
-
 
 
 }

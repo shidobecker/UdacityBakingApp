@@ -8,19 +8,22 @@ import android.widget.TextView;
 import com.bakingapp.android.udacitybakingapp.R;
 import com.bakingapp.android.udacitybakingapp.model.Recipe;
 import com.bakingapp.android.udacitybakingapp.model.Step;
+import com.bakingapp.android.udacitybakingapp.testutils.RecipeIdlingResource;
 import com.bakingapp.android.udacitybakingapp.viewmodel.StepViewModel;
 import com.bakingapp.android.udacitybakingapp.viewmodel.StepViewModelFactory;
 import com.google.gson.Gson;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.VisibleForTesting;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProviders;
+import androidx.test.espresso.IdlingResource;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
 //This will only be shown on mobile devices - Video Screen with instructions
 public class StepActivity extends AppCompatActivity {
-
 
     @BindView(R.id.step_next)
     TextView stepNext;
@@ -28,14 +31,32 @@ public class StepActivity extends AppCompatActivity {
     @BindView(R.id.step_previous)
     TextView stepPrevious;
 
-
     private StepViewModel viewModel;
+
+    @Nullable
+    private RecipeIdlingResource mIdlingResource;
+
+    @Nullable
+    public RecipeIdlingResource getmIdlingResource() {
+        return mIdlingResource;
+    }
+
+    @VisibleForTesting
+    @NonNull
+    public IdlingResource getIdlingResource() {
+        if (mIdlingResource == null) {
+            mIdlingResource = new RecipeIdlingResource();
+        }
+        return mIdlingResource;
+    }
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_step);
+
+        getIdlingResource();
 
         ButterKnife.bind(this);
 

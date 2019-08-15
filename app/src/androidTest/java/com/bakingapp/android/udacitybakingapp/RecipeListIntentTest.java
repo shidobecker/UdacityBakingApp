@@ -32,31 +32,27 @@ public class RecipeListIntentTest {
             RecipeListActivity.class);
 
     @Before
-    public void stubAllExternalIntents() {
-        intending(not(isInternal())).respondWith(new Instrumentation.ActivityResult(Activity.RESULT_OK, null));
+    public void stubIntent() {
+        intending(not(isInternal())).respondWith(
+                new Instrumentation.ActivityResult(Activity.RESULT_OK, null));
     }
 
     @Test
-    public void intentTest(){
+    public void onClickRecyclerViewItem_GoToStepListActivity(){
 
-        // Let the UI load completely first
-    /*   try {
-            Thread.sleep(1000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-*/
-        //Recyclerview scroll to position
-        onView(withId(R.id.recipes_recycler_view)).perform(RecyclerViewActions.scrollToPosition(4));
+        onView(withId(R.id.recipes_recycler_view))
+                .perform(RecyclerViewActions.scrollToPosition(4));
 
-        //Perform Recyclerview click on item at position
-        onView(withId(R.id.recipes_recycler_view)).perform(RecyclerViewActions.actionOnItemAtPosition(0, click()));
+        onView(withId(R.id.recipes_recycler_view))
+                .perform(RecyclerViewActions.actionOnItemAtPosition(0, click()));
 
-        //Check if intent (RecipeActivity to StepListActivity) has RECIPE_INTENT_EXTRA
-        intended(hasExtraWithKey(RecipeListActivity.RECIPE_EXTRA));
+        intended(
+                hasExtraWithKey(RecipeListActivity.RECIPE_EXTRA)
+        );
 
-        //Check if intent (RecipeDetailsActivity to CookingActivity) has RECIPE_INTENT_EXTRA
-        intended(hasComponent(StepListActivity.class.getName()));
+        intended(
+                hasComponent(StepListActivity.class.getName())
+        );
     }
 
 }
