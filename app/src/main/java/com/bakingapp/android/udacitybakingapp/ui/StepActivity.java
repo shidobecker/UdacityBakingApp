@@ -1,6 +1,7 @@
 package com.bakingapp.android.udacitybakingapp.ui;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
@@ -83,21 +84,30 @@ public class StepActivity extends AppCompatActivity {
     }
 
     private void setupView() {
-        viewModel.getObservableRecipe().observe(this, recipe ->
-                getSupportActionBar().setTitle(recipe.getName()));
-
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        viewModel.getObservableRecipe().observe(this, recipe -> {
+            if (!getResources().getBoolean(R.bool.isLandScape)) {
+                getSupportActionBar().setTitle(recipe.getName());
+                getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            }else{
+                getSupportActionBar().hide();
+            }
+        });
 
         viewModel.getObservableCurrentStep().observe(this, step -> {
-            InstructionsFragment instructionsFragment = InstructionsFragment
-                    .newInstance(step.getShortDescription(),
-                            step.getDescription(),
-                            step.getVideoURL(),
-                            step.getThumbnailURL());
+            InstructionsFragment instructionsFragment = (InstructionsFragment)
+                    getSupportFragmentManager().findFragmentByTag(InstructionsFragment.TAG);
 
-            getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.step_player_container, instructionsFragment)
-                    .commit();
+            if (instructionsFragment == null) {
+                instructionsFragment = InstructionsFragment
+                        .newInstance(step.getShortDescription(),
+                                step.getDescription(),
+                                step.getVideoURL(),
+                                step.getThumbnailURL());
+
+                getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.step_player_container, instructionsFragment, InstructionsFragment.TAG)
+                        .commit();
+            }
         });
 
         viewModel.getShowNextStep().observe(this, show -> {
@@ -119,6 +129,7 @@ public class StepActivity extends AppCompatActivity {
         stepPrevious.setOnClickListener(view -> viewModel.goToPreviousStep());
 
     }
+
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {

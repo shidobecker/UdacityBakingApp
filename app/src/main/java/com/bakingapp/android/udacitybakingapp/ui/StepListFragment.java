@@ -2,6 +2,7 @@ package com.bakingapp.android.udacitybakingapp.ui;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,7 +26,11 @@ import butterknife.ButterKnife;
 //Fragment responsible for showing the list of Steps with a RecyclerView inside
 public class StepListFragment extends Fragment {
 
+    static final String TAG = StepListFragment.class.getCanonicalName();
+
     static final String STEPS_ARG = "STEPS_ARG";
+
+    static final String STATE_LAST_POSITION = "STATE_LAST_POSITION";
 
     @BindView(R.id.step_recycler_view)
     RecyclerView stepRecyclerView;
@@ -41,7 +46,9 @@ public class StepListFragment extends Fragment {
 
     private List<Step> stepList;
 
-    private List<Ingredient>ingredients;
+    private List<Ingredient> ingredients;
+
+    private int lastPosition;
 
     public interface OnStepClickListener {
         void onStepSelected(Step step);
@@ -74,6 +81,10 @@ public class StepListFragment extends Fragment {
             ingredients = recipe.getIngredients();
         }
 
+        if (savedInstanceState != null) {
+            lastPosition = savedInstanceState.getInt(STATE_LAST_POSITION);
+        }
+
         return rootView;
     }
 
@@ -87,9 +98,16 @@ public class StepListFragment extends Fragment {
     }
 
 
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putInt(STATE_LAST_POSITION, lastPosition);
+    }
+
     private void setupStepList() {
-        stepListAdapter = new StepListAdapter(step -> {
+        stepListAdapter = new StepListAdapter(lastPosition, (step, position) -> {
             stepCallback.onStepSelected(step);
+            lastPosition = position;
         });
 
         stepListAdapter.setStepList(stepList);
@@ -99,7 +117,7 @@ public class StepListFragment extends Fragment {
         stepRecyclerView.setAdapter(stepListAdapter);
     }
 
-    private void setupIngredientsList(){
+    private void setupIngredientsList() {
         ingredientsAdapter = new IngredientsAdapter();
         ingredientsAdapter.setIngredients(ingredients);
 

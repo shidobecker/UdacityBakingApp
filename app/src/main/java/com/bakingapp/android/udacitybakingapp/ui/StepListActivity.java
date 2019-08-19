@@ -63,11 +63,16 @@ public class StepListActivity extends AppCompatActivity implements StepListFragm
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        StepListFragment fragment = StepListFragment.newInstance(recipe);
+        StepListFragment fragment = (StepListFragment) getSupportFragmentManager()
+                .findFragmentByTag(StepListFragment.TAG);
 
-        getSupportFragmentManager().beginTransaction()
-                .replace(R.id.step_list_fragment_container, fragment)
-                .commit();
+        if (fragment == null) {
+            fragment = StepListFragment.newInstance(recipe);
+
+            getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.step_list_fragment_container, fragment, StepListFragment.TAG)
+                    .commit();
+        }
 
         isTabletSize = getResources().getBoolean(R.bool.isTablet);
 
@@ -78,16 +83,23 @@ public class StepListActivity extends AppCompatActivity implements StepListFragm
     }
 
     private void populateFragments() {
-        Step firstStep = recipe.getSteps().get(0);
-        InstructionsFragment instructionsFragment = InstructionsFragment
-                .newInstance(firstStep.getShortDescription(),
-                        firstStep.getDescription(),
-                        firstStep.getVideoURL(),
-                        firstStep.getThumbnailURL());
+        InstructionsFragment instructionsFragment = (InstructionsFragment)
+                getSupportFragmentManager().findFragmentByTag(InstructionsFragment.TAG);
 
-        getSupportFragmentManager().beginTransaction()
-                .replace(R.id.step_player_container, instructionsFragment)
-                .commit();
+        if (instructionsFragment == null) {
+            Step firstStep = recipe.getSteps().get(0);
+            instructionsFragment = InstructionsFragment
+                    .newInstance(firstStep.getShortDescription(),
+                            firstStep.getDescription(),
+                            firstStep.getVideoURL(),
+                            firstStep.getThumbnailURL());
+
+            getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.step_player_container, instructionsFragment, InstructionsFragment.TAG)
+                    .commit();
+
+        }
+
     }
 
     @Override
@@ -129,6 +141,11 @@ public class StepListActivity extends AppCompatActivity implements StepListFragm
         }
 
         return true;
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
     }
 
     @Override

@@ -1,12 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
   android:layout_width="match_parent"
   android:layout_height="match_parent">
 
-  <FrameLayout
-    android:id="@+id/step_player_container"
+
+  <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content" />
+    android:layout_height="match_parent">
+
+    <FrameLayout
+      android:id="@+id/step_player_container"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content" />
 
 
-</ScrollView>
+  </ScrollView>
+
+  <LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_gravity="bottom"
+    android:background="@color/colorPrimary"
+    android:orientation="horizontal"
+    android:padding="8dp">
+
+    <TextView
+      android:id="@+id/step_previous"
+      style="@style/PreviousText"
+      android:text="@string/previous_step" />
+
+
+    <TextView
+      android:id="@+id/step_next"
+      style="@style/NextText"
+      android:text="@string/next_step" />
+
+
+  </LinearLayout>
+
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

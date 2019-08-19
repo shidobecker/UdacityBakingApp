@@ -1,4 +1,5 @@
 
-isquid:S3008"NRename this field "TAG" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(€òít8šãœÒÆ-
-gsquid:CommentedOutCodeLine"<This block of commented-out lines of code should be removed.(²øåÄ8šãœÒÆ-
-gsquid:CommentedOutCodeLine"<This block of commented-out lines of code should be removed.(Ì­½â8šãœÒÆ-
+lsquid:CommentedOutCodeLine"<This block of commented-out lines of code should be removed.(ã±¤¡ûÿÿÿÿ8¯™µ¢È-
+isquid:S3008"NRename this field "TAG" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(€òít8¯™µ¢È-
+asquid:UnusedPrivateMethod"2Remove this unused private "saveAllPlants" method.(¨–ûÿÿÿÿ8¯™µ¢È-
+esquid:UnusedPrivateMethod"6Remove this unused private "hasAnyRecipeSaved" method.(•âüÿÿÿÿÿ8¯™µ¢È-

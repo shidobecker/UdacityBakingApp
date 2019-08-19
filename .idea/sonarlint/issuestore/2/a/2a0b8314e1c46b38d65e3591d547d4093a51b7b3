@@ -1,5 +1,4 @@
 
-[squid:UselessImportCheck"-Remove this unused import 'android.util.Log'.(Ô¦Ø²øÿÿÿÿ8 §•ÓÆ-
-jsquid:MaximumInheritanceDepth"<This class has 6 parents which is greater than 5 authorized.(û·Œê8ïãïÒÆ-
-ksquid:S00116"NRename this field "TAG" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(¤Ã¡8ïãïÒÆ-
-Csquid:S1068"'Remove this unused "TAG" private field.(¤Ã¡8 §•ÓÆ-
+ksquid:S00116"NRename this field "TAG" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(¤Ã¡8‡œ¡±É-
+jsquid:MaximumInheritanceDepth"<This class has 6 parents which is greater than 5 authorized.(û·Œê8‡œ¡±É-
+Csquid:S1068"'Remove this unused "TAG" private field.(¤Ã¡8‡œ¡±É-

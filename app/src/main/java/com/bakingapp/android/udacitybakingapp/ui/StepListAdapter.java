@@ -1,5 +1,6 @@
 package com.bakingapp.android.udacitybakingapp.ui;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,15 +24,16 @@ public class StepListAdapter extends RecyclerView.Adapter<StepListAdapter.StepLi
     private List<Step> stepList = new ArrayList<>();
 
     interface StepClickListener {
-        void onClickStep(Step step);
+        void onClickStep(Step step, int position);
     }
 
     private StepClickListener listener;
 
-    private int currentItem = 0;
+    private int currentItem;
 
-    StepListAdapter(StepClickListener listener) {
+    StepListAdapter(int lastPosition, StepClickListener listener) {
         this.listener = listener;
+        this.currentItem = lastPosition;
     }
 
     void setStepList(List<Step> stepList) {
@@ -81,7 +83,7 @@ public class StepListAdapter extends RecyclerView.Adapter<StepListAdapter.StepLi
             shortDescription.setText(step.getShortDescription());
 
             container.setOnClickListener(view -> {
-                listener.onClickStep(step);
+                listener.onClickStep(step, getAdapterPosition());
                 currentItem = position;
                 notifyDataSetChanged();
             });
