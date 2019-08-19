@@ -5,10 +5,10 @@ import android.appwidget.AppWidgetManager;
 import android.appwidget.AppWidgetProvider;
 import android.content.Context;
 import android.content.Intent;
+import android.view.View;
 import android.widget.RemoteViews;
 
 import com.bakingapp.android.udacitybakingapp.R;
-import com.bakingapp.android.udacitybakingapp.model.Ingredient;
 import com.bakingapp.android.udacitybakingapp.model.Recipe;
 import com.bakingapp.android.udacitybakingapp.ui.StepListActivity;
 import com.google.gson.Gson;
@@ -17,54 +17,43 @@ public class RecipeWidgetProvider extends AppWidgetProvider {
 
     public static final String WIDGET_RECIPE_EXTRA = "WIDGET_RECIPE_EXTRA";
 
-
     public static void updateAppWidget(Context context, Recipe recipe,
                                        AppWidgetManager appWidgetManager, int appWidgetId) {
 
         RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.widget_ingredients);
 
         Intent intent = new Intent(context, StepListActivity.class);
-        intent.putExtra(WIDGET_RECIPE_EXTRA, new Gson().toJson(recipe));
+
+        String recipeString = new Gson().toJson(recipe);
+
+        intent.putExtra(WIDGET_RECIPE_EXTRA, recipeString);
 
         PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, intent, 0);
 
         if (recipe != null) {
+            //Filling the Recipe name RemoteView
             views.setTextViewText(R.id.widget_recipe_name, recipe.getName());
 
-            //List of ingredients
-            for (Ingredient ingredient : recipe.getIngredients()) {
-                RemoteViews ingredientView = new RemoteViews(context.getPackageName(),
-                        R.layout.widget_ingredient_list_item);
+            //This starts the RemoteViewsFactory to fill our ingredient list
+            Intent remoteViewsIntent = new Intent(context, RecipeRemoteViewsService.class);
+            views.setRemoteAdapter(R.id.widgetListView, remoteViewsIntent);
 
-                String quantityText = String.valueOf(ingredient.getQuantity());
-                String measureText = ingredient.getMeasure();
-                String nameText = ingredient.getName();
-                StringBuilder ingredientText = new StringBuilder()
-                        .append("(")
-                        .append(quantityText)
-                        .append(" ")
-                        .append(measureText)
-                        .append(") ")
-                        .append(nameText);
-
-                ingredientView.setTextViewText(R.id.widget_ingredient_name, ingredientText);
-
-                views.addView(R.id.widget_ingredients_container, ingredientView);
-            }
-
-            views.setOnClickPendingIntent(R.id.widget_ingredients_container, pendingIntent);
+            views.setViewVisibility(R.id.widget_ingredients_container, View.VISIBLE);
+            views.setOnClickPendingIntent(R.id.widget_recipe_name, pendingIntent);
         } else {
             views.setTextViewText(R.id.widget_recipe_name, context.getString(R.string.no_recipe_widget));
-            views.removeAllViews(R.id.widget_ingredients_container);
-
+            views.setViewVisibility(R.id.widget_ingredients_container, View.GONE);
         }
 
-
         appWidgetManager.updateAppWidget(appWidgetId, views);
+        appWidgetManager.notifyAppWidgetViewDataChanged(appWidgetId, R.id.widgetListView);
+
 
     }
 
-    public static void updateWidgetRecipe(Context context, Recipe recipe, AppWidgetManager appWidgetManager,
+    //Update All widgets passing that recipe
+    public static void updateWidgetRecipe(Context context, Recipe recipe,
+                                          AppWidgetManager appWidgetManager,
                                           int[] appWidgetIds) {
         // There may be multiple widgets active, so update all of them
         for (int appWidgetId : appWidgetIds) {

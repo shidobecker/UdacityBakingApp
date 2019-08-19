@@ -19,6 +19,16 @@
     android:id="@+id/widget_ingredients_container"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical" />
+    android:orientation="vertical">
+
+    <ListView
+      android:id="@+id/widgetListView"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:divider="#eeeeee"
+      android:dividerHeight="1dp"
+      tools:listitem="@layout/widget_ingredient_list_item" />
+
+  </LinearLayout>
 
 </LinearLayout>

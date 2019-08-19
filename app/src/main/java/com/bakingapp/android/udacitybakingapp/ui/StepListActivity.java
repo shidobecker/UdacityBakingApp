@@ -2,11 +2,13 @@ package com.bakingapp.android.udacitybakingapp.ui;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.FrameLayout;
 
 import com.bakingapp.android.udacitybakingapp.R;
+import com.bakingapp.android.udacitybakingapp.model.Ingredient;
 import com.bakingapp.android.udacitybakingapp.model.Recipe;
 import com.bakingapp.android.udacitybakingapp.model.Step;
 import com.bakingapp.android.udacitybakingapp.repository.RecipeRepository;
@@ -154,13 +156,18 @@ public class StepListActivity extends AppCompatActivity implements StepListFragm
         if (item.getItemId() == R.id.action_bookmark) {
             //Saving that Id on SharedPreferences
             if (RecipePreferences.getCurrentDisplayRecipe(this) != recipe.getId()) {
-                RecipePreferences.setCurrentDisplayRecipe(this, recipe.getId());
-                item.setIcon(R.drawable.ic_bookmark_black);
-                saveRecipe();
+                RecipeRepository.getInstance().saveRecipe(recipe, () -> {
+                    RecipePreferences.setCurrentDisplayRecipe(this, recipe.getId());
+                    item.setIcon(R.drawable.ic_bookmark_black);
+
+                    RecipeWidgetService.startActionOpenRecipe(this);
+                });
+
             } else {
+                RecipeRepository.getInstance().removeRecipe();
                 RecipePreferences.setCurrentDisplayRecipe(this, -1);
                 item.setIcon(R.drawable.ic_bookmark_white);
-                removeRecipe();
+                RecipeWidgetService.startActionRemoveRecipe(this);
             }
         } else if (item.getItemId() == android.R.id.home) {
             onBackPressed();
@@ -169,16 +176,6 @@ public class StepListActivity extends AppCompatActivity implements StepListFragm
 
         return super.onOptionsItemSelected(item);
 
-    }
-
-    private void saveRecipe() {
-        RecipeRepository.getInstance().saveRecipe(recipe);
-        RecipeWidgetService.startActionOpenRecipe(this);
-    }
-
-    private void removeRecipe() {
-        RecipeRepository.getInstance().removeRecipe();
-        RecipeWidgetService.startActionRemoveRecipe(this);
     }
 
 

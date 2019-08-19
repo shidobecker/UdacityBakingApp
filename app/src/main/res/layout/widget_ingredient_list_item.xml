@@ -5,6 +5,7 @@
   android:layout_height="match_parent">
 
   <TextView
+    android:padding="@dimen/default_margin"
     android:id="@+id/widget_ingredient_name"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"

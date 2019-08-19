@@ -9,12 +9,10 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
-import android.util.Log;
 
 import com.bakingapp.android.udacitybakingapp.R;
 import com.bakingapp.android.udacitybakingapp.model.Recipe;
 import com.bakingapp.android.udacitybakingapp.repository.RecipeRepository;
-import com.bakingapp.android.udacitybakingapp.utils.RecipePreferences;
 
 import androidx.core.app.NotificationCompat;
 import androidx.core.content.ContextCompat;
@@ -72,10 +70,7 @@ public class RecipeWidgetService extends IntentService {
     }
 
     private void handleActionOpenRecipe() {
-        //Get the saved id from SharedPreferences
-        int savedId = RecipePreferences.getCurrentDisplayRecipe(getApplicationContext());
-
-        Recipe recipe = RecipeRepository.getInstance().queryAllByRecipeId(savedId);
+        Recipe recipe = RecipeRepository.getInstance().querySavedRecipe();
 
         //Create AppWidgetManager to pass the retrieved Recipe from the repository
         AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(this);
@@ -83,7 +78,6 @@ public class RecipeWidgetService extends IntentService {
 
         RecipeWidgetProvider.updateWidgetRecipe(this, recipe, appWidgetManager, appWidgetIds);
 
-        stopSelf();
     }
 
     private void handleActionRemoveRecipe() {
@@ -94,7 +88,6 @@ public class RecipeWidgetService extends IntentService {
         //Passing null to recipe
         RecipeWidgetProvider.updateWidgetRecipe(this, null, appWidgetManager, appWidgetIds);
 
-        stopSelf();
     }
 
     // Trigger the service to perform the action
